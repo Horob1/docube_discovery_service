@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  discovery-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: docube/discovery-server:latest
+    container_name: discovery-server
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+      - JAVA_OPTS=-Xms256m -Xmx512m
+    networks:
+      - horob1_docube
+
+# Mạng này là external – tạo 1 lần duy nhất bằng:
+#   docker network create horob1_docube
+networks:
+  horob1_docube:
+    external: true
+
